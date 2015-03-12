@@ -1,0 +1,26 @@
+---
+drupal_www_owner: taller
+drupal_www_group: apache
+# @TODO: Make os family vars work.
+# system_packages:
+#   - libselinux-python
+#   - libxml2
+#   - zlib
+#   - gcc
+#   - ruby
+#   - MySQL-python
+# php_fpm_yum_packages:
+#   - php
+#   - php-fpm
+#   - php-cli
+#   - php-common
+#   - php-devel
+#   - php-gd
+#   - php-ldap
+#   - php-mbstring
+#   - php-mysql
+#   - php-pdo
+#   - php-pear
+#   - php-xml
+#   - php-xmlrpc
+#   - php-soap
