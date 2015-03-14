@@ -37,9 +37,12 @@ read the readme inside the specific directory.
  * The databases directory is used to place dumps from the persistant storages like MySQL,
  MongoDB and others, used for the initial boot in new environments.
 * [configs](https://github.com/TallerWebSolutions/drupal-boilerplate/blob/master/configs)
- * The configs directory is used to place configurations of other softwares like Apache Solr,
- Redis, MongoDB and others.
+ * The configs directory is used to place configurations of other softwares like Apache Solr, Redis, MongoDB and others.
+ * [servers](https://github.com/TallerWebSolutions/drupal-boilerplate/blob/master/configs/servers)
+  * Provisioning files for server, local VMs/Containers.
 * [.gitignore](https://github.com/TallerWebSolutions/drupal-boilerplate/blob/master/.gitignore)
  * Contains the a list of the most common excluded files.
 
 Built by Robots&trade;
+
+Enhanced by Taller&#0153;
