@@ -1,0 +1,361 @@
+---
+- hosts: database
+  sudo: yes
+
+  roles:
+    - role: mauricios.MySQL
+
+- hosts: webserver
+  sudo: yes
+  vars:
+    www_owner: fee
+    drupal_deploy_key: >
+      ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDiLORdcemdBOFV1rOIdSXFe9vkhdDLu5QyFG+4/C/rXE/A7eoJnnOEWPkvXgj0XBk3Dm9nbZRMfZkDsw1M16vkekp6JEjWp2e3RZztHq+iyDUCJfUbAwE1Q1+hrqHkFqg6s+fAOiwgUBFqO4kSAlyZh3sz734gODjgW2cHX8oe26EjEqHEI/CJygbc8zz2B15HqV73yrL/bVUvivhMu/bT3TqzQWP7DZ5C3TdHEod+e8QNQ+NlvkxspVQo/jqLovn5vsyAL26QkXSHZPf2iKw0FEPD8MVZOL1bFSwApxbb7ts4nceA+VctiQaCi9U6vN499Qg4V+uBTgtcUMTSNbdd homolog-taller-env@beanstalkapp.com
+    drupal_deploy_script: "{{ drupal_path}}/../scripts/pull.sh"
+    drupal_path: "/var/www/fee/docroot"
+    drupal_www_owner: "{{ www_owner }}"
+    drupal_www_group: "{{ www_group }}"
+    drupal_version: homolog
+    drupal_source: "https://{{ drupal_git_user }}:{{ drupal_git_pass }}@taller.git.beanstalkapp.com/fiesc-espaco-estudante.git"
+    drupal_source_parent_level: ".."
+    drupal_git_user: fiesc_espaco_estudante
+    drupal_git_pass: f4avor1tebot4deploy
+    drupal_db_dump: "http://qa-fiesc.fee.dropit.in/sites/default/files/bkp-qa.sql.gz"
+    drupal_drush_remote_alias: "@fee.qa"
+    drupal_private_key: |
+      -----BEGIN RSA PRIVATE KEY-----
+      MIIEpAIBAAKCAQEA0ncvDV/B4UPw1xCwxegUn3729VyihBfljTr9kjRvJlmzExrP
+      CBtiz7DsCmod/vv4tW9ezuvSaEHuDD31e9cMx2iGUeGr2BkmgaIPA04Yt1vq8okz
+      c/R9s3cVsxLqYhUcHFDitC85sklRiLHL47hvGepEwPdUbGKtVfZJ/tHJj2Pi1Z/w
+      IvcboxOwO0/s8JbILILzBqcPl31zI5lNo5KGbmsl7NRZADgCiJBxolfULj0Fj9k4
+      gwzQgNT/eQyKzZ/nr2Ldc4yM3vA262Hbp4KrmProslgcZaYesemrahVch9MY/OnD
+      xUlIuwp4GwSoXuRoLcScaNfUiM/HD3ZmOPOsywIDAQABAoIBAAXVyhcr1XtCX/YG
+      f3AtPA0j/wLUe6j/5Jxiy073ZzGAASgBcUX/RGEPvauYP5anM8EMAmvoO+AqG8h5
+      G0pArxkEO90fTZ1jLR8g+BuWWbcTtFLfHO8VEzsbjR1248quXSYn0/E88fOQdtM8
+      YrPAlEv6o8dZ1BxhK/8bIfgPpu/zvxqodU/VJI+rWfXyPibCpEAFH7vpuPaY3jWn
+      rHcBhSgzX1m3IpvgFbNT3+f+H9fNd9oCFxIzXCbYIi0tbP5OsZDthLDWlryj+xFj
+      d68NFarJff6bZJICf7cu5Bmeb0gyzvRIGVUiuV0XONVhgRYg8P/dHQcsyrTEB/65
+      KfysFZECgYEA+Gpr+N5KIRus/pW7NhdklsKIkPCLS5zONHnuMfeb0GWO19wRQP+Z
+      /Tp31reXbBl660ajnPjUA5DceI1hU3l3TaSrbKZXejxACaXFZDBnQr21HJg3zH0u
+      a4vllu/X0mFV2iHCtsvk+TphfvI/oncNZplC+m729dD62G21NZmkPnMCgYEA2OQm
+      TbwWc3C627s/4j4ahZLswFZufICOKZijD3WU6Mt/hUhYiLbVT1seNTZD4a5JRDRd
+      nBACFb/i97seBMlImhhfA7OGkWfV1gIMdxxDvolkZsl7TZjapPaXRZOqmoui+6Na
+      G5gHHGKRUG1WE1eQHqGX6Km8iWZu9doWwH7lKkkCgYEAgV1iZxLTxdQUzeuJt8yM
+      3Jnn5prt322EUP2iVrEcmnUY4z6+WXwCZEYbfFzVZT0LrxR1RdyrBERfHAR8R608
+      vNlhUE57xbM0ohGK7vbp/26tr3txq3MRRn5vDKBQY0W/IL5uGSWrU0Lc3PAoxWF8
+      QA7WO3an8zFmQGk5cfVV/BMCgYEAxLhajZMVgeszcG0sClZt081pcyJx3/bx+oR5
+      EWKCh4tbxFXUB1xdqTZp9bWcaCueRICCjzRtz7BVeoB7P7gZY7rLIx5H5caaSxtc
+      lwRJ5Z3UNO52KfGEDq+ikPbYfIg+caK97d08ReCZEKu6sJxxGXdTwzGA0dbYuaDv
+      lfUCghECgYBNo8o9FCQ9UEO4i/mDR2OIerXkzXNCvNIHEY0QCv5VjQ1tULQiQ/Ue
+      ceksEDbeCK6SyDFmVwyqIJn0LAGkNzgsiQ5fm1swSHtAjDJkQU5H4Y8cU5jW5Ap3
+      4XxhumjatY3l6tYgOswbtiJoDKZ+UgvLMww1JgkgpWdOeGlveBMOlQ==
+      -----END RSA PRIVATE KEY-----
+    drupal_db:
+      driver: mysql
+      user: "fee"
+      password: "ZJD78OIK"
+      database: "FEE_Homolog"
+      host: "10.180.201.241"
+      port: ""
+      prefix: ""
+
+  pre_tasks:
+    - name: Include OS-specific variables.
+      include_vars: "vars/{{ ansible_os_family }}.yaml"
+
+    - name: "Installing dependencies (RedHat)."
+      yum: >
+        name={{ item }}
+        enablerepo=rhel-7-server-debug-rpms,rhel-7-server-extras-debug-rpms,rhel-7-server-extras-rpms,rhel-7-server-extras-source-rpms,rhel-7-server-fastrack-debug-rpms,rhel-7-server-fastrack-rpms,rhel-7-server-fastrack-source-rpms,rhel-7-server-optional-debug-rpms,rhel-7-server-optional-fastrack-debug-rpms,rhel-7-server-optional-fastrack-rpms,rhel-7-server-optional-fastrack-source-rpms,rhel-7-server-optional-rpms,rhel-7-server-optional-source-rpms,rhel-7-server-rh-common-debug-rpms,rhel-7-server-rh-common-rpms,rhel-7-server-rh-common-source-rpms,rhel-7-server-rhn-tools-debug-rpms,rhel-7-server-rhn-tools-rpms,rhel-7-server-rhn-tools-source-rpms,rhel-7-server-rpms,rhel-7-server-supplementary-debug-rpms,rhel-7-server-supplementary-rpms,rhel-7-server-supplementary-source-rpms,rhel-7-server-thirdparty-oracle-java-rpms,rhel-7-server-thirdparty-oracle-java-source-rpms,rhel-7-server-v2vwin-1-debug-rpms,rhel-7-server-v2vwin-1-rpms,rhel-7-server-v2vwin-1-source-rpms
+        state=latest
+      with_items: system_packages
+      when: ansible_os_family == 'RedHat'
+      tags:
+        - system
+
+    - name: "Installing dependencies (Debian)."
+      apt: >
+        name={{ item }}
+        state=installed
+        update_cache=yes
+        cache_valid_time=86400
+      with_items: system_packages
+      when: ansible_os_family == 'Debian'
+      tags:
+        - system
+
+    - name: "Add ruby gems dependency manager (bundler)."
+      gem: >
+        name=bundler
+        user_install=no
+      tags:
+        - system
+
+    - name: "Create www's group group."
+      group: "name={{ www_group }}"
+      tags:
+        - user
+
+    - name: "Create www's owner user."
+      user: >
+        name={{ www_owner }}
+        group={{ www_group }}
+        shell=/bin/bash
+        append=yes
+      tags:
+        - user
+
+    - name: "Set permissions for the /var/www directory."
+      file: >
+        path=/var/www
+        mode=6775
+        owner={{ www_owner }}
+        group={{ www_group }}
+        state=directory
+
+    - name: "Generate www's owner ssh key."
+      user: >
+        name={{ www_owner }}
+        generate_ssh_key=yes
+        ssh_key_bits=2048
+        ssh_key_file=/home/{{ www_owner }}/.ssh/id_rsa
+      when: drupal_private_key == ''
+      tags:
+        - user
+
+    - name: "Check if the .ssh directory is present."
+      file: >
+        path=/home/{{ www_owner }}/.ssh
+        mode=6700
+        state=directory
+      sudo: yes
+      sudo_user: "{{ www_owner }}"
+
+    - name: "Apply the given SSH private key to the www's owner."
+      shell: >
+        echo "{{ drupal_private_key }}" > /home/{{ www_owner }}/.ssh/id_rsa
+        creates=/home/{{ www_owner }}/.ssh/id_rsa
+      when: drupal_private_key != ''
+      tags:
+        - user
+
+    - name: "Set the right permissions for the ssh key file."
+      file: >
+        path=/home/{{ www_owner }}/.ssh/id_rsa
+        mode=400
+        owner={{ www_owner }}
+        group={{ www_group }}
+      when: drupal_private_key != ''
+      tags:
+        - user
+
+  roles:
+    - role: geerlingguy.git
+      git_packages:
+        - git
+      tags:
+        - git
+
+    - role: geerlingguy.apache
+      apache_vhosts:
+        # Additional properties: 'serveradmin, extra_parameters'.
+        - servername: "estudante.sc.senai.br"
+          documentroot: "{{ drupal_path }}"
+      tags:
+        - webserver
+
+    # Install and configure: PHP-FPM with 3 pools.
+    - role: nbz4live.php-fpm
+      php_fpm_ini:
+        - option: "memory_limit"
+          section: "PHP"
+          value: "512M"
+        - option: "engine"
+          section: "PHP"
+          value: "1"
+        - option: "error_reporting"
+          section: "PHP"
+          value: "E_ALL & ~E_DEPRECATED & ~E_STRICT"
+        - option: "ldap.max_links"
+          section: "ldap"
+          value: "1"
+        - option: "max_execution_time"
+          section: "PHP"
+          value: "60"
+        - option: "upload_max_filesize"
+          section: "PHP"
+          value: "64M"
+        - option: "date.timezone"
+          section: "Date"
+          value: "America/Sao_Paulo"
+          # APC related configuration.
+        - option: "apc.shm_size"
+          section: "APC"
+          value: "96M"
+        - option: "apc.shm_segments"
+          section: "APC"
+          value: "1"
+        - option: "apc.num_files_hint"
+          section: "APC"
+          value: "2048"
+        - option: "apc.user_entries_hint"
+          section: "APC"
+          value: "4096"
+        - option: "apc.ttl"
+          section: "APC"
+          value: "7200"
+        - option: "apc.use_request_time"
+          section: "APC"
+          value: "1"
+        - option: "apc.user_ttl"
+          section: "APC"
+          value: "7200"
+        - option: "apc.gc_ttl"
+          section: "APC"
+          value: "3600"
+        - option: "apc.mmap_file_mask"
+          section: "APC"
+          value: "/tmp/apc.XXXXXX"
+        - option: "apc.file_update_protection"
+          section: "APC"
+          value: "2"
+        - option: "apc.enable_cli"
+          section: "APC"
+          value: "1"
+        - option: "apc.max_file_size"
+          section: "APC"
+          value: "1M"
+        - option: "apc.stat"
+          section: "APC"
+          value: "1"
+        - option: "apc.stat_ctime"
+          section: "APC"
+          value: "0"
+        - option: "apc.canonicalize"
+          section: "APC"
+          value: "0"
+        - option: "apc.write_lock"
+          section: "APC"
+          value: "1"
+        - option: "apc.report_autofilter"
+          section: "APC"
+          value: "0"
+        - option: "apc.rfc1867"
+          section: "APC"
+          value: "1"
+        - option: "apc.rfc1867_prefix"
+          section: "APC"
+          value: "upload_"
+        - option: "apc.rfc1867_name"
+          section: "APC"
+          value: "APC_UPLOAD_PROGRESS"
+        - option: "apc.rfc1867_freq"
+          section: "APC"
+          value: "0"
+        - option: "apc.rfc1867_ttl"
+          section: "APC"
+          value: "3600"
+        - option: "apc.include_once_override"
+          section: "APC"
+          value: "0"
+        - option: "apc.lazy_classes"
+          section: "APC"
+          value: "0"
+        - option: "apc.lazy_functions"
+          section: "APC"
+          value: "0"
+        - option: "apc.coredump_unmap"
+          section: "APC"
+          value: "0"
+        - option: "apc.file_md5"
+          section: "APC"
+          value: "0"
+
+      php_fpm_pools:
+        - name: www0
+          listen: /var/run/php-fpm.sock
+          user: "{{ www_owner }}"
+          group: "{{ www_group }}"
+          listen.owner: "{{ www_owner }}"
+          listen.group: "{{ www_group }}"
+          pm: dynamic
+          pm.max_children: 5
+          pm.start_servers: 2
+          pm.min_spare_servers: 1
+          pm.max_spare_servers: 3
+          chdir: /
+
+        - name: www1
+          listen: /var/run/php-fpm-zwei.sock
+          user: "{{ www_owner }}"
+          group: "{{ www_group }}"
+          listen.owner: "{{ www_owner }}"
+          listen.group: "{{ www_group }}"
+          pm: dynamic
+          pm.max_children: 5
+          pm.start_servers: 2
+          pm.min_spare_servers: 1
+          pm.max_spare_servers: 3
+          chdir: /
+
+        - name: www-bkp
+          listen: /var/run/php-fpm-bkp.sock
+          user: "{{ www_owner }}"
+          group: "{{ www_group }}"
+          listen.owner: "{{ www_owner }}"
+          listen.group: "{{ www_group }}"
+          pm: dynamic
+          pm.max_children: 5
+          pm.start_servers: 2
+          pm.min_spare_servers: 1
+          pm.max_spare_servers: 3
+          chdir: /
+      tags:
+        - php
+
+    - role: revagomes.php-pecl
+      tags:
+        - php
+
+    - geerlingguy.composer
+    - role: geerlingguy.drush
+      drush_version: 6.x
+      tags:
+        - drupal
+
+    - role: taller.fiesc-drupal
+      tags:
+        - drupal
+
+  tasks:
+    - name: "Enable httpd_can_network_connect directive in SELinux."
+      shell: "setsebool httpd_can_network_connect 1"
+      sudo: yes
+      sudo_user: root
+      when: ansible_os_family == 'RedHat'
+      tags:
+        - system
+        - security
+
+    - name: "Enable Apache to write in the Drupal's upload files dir in SELinux."
+      shell: |
+        semanage fcontext -a -t httpd_sys_rw_content_t "{{ drupal_path }}/sites/default/files(/.*)?"
+        restorecon -R -v {{ drupal_path }}/sites/default/files/
+      sudo: yes
+      sudo_user: root
+      when: ansible_os_family == 'RedHat'
+      tags:
+        - system
+        - security
+
+    - name: "Add the deploy key to authorized_keys file."
+      authorized_key: >
+        user={{ www_owner }}
+        key="{{ drupal_deploy_key }}"
+      tags:
+        - system
+
+    # sudo iptables -I INPUT 4 -p tcp -m state --state NEW -m tcp --dport 80 -j ACCEPT
+    - name: "Expose port 80 to the world."
+      command: iptables -I INPUT 4 -p tcp -m state --state NEW -m tcp --dport 80 -j ACCEPT
+      # ufw: rule=allow port=80 proto=tcp

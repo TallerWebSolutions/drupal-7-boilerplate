@@ -1,0 +1,47 @@
+---
+www_group: apache
+drupal_www_owner: fee
+drupal_www_group: apache
+system_packages:
+  - libselinux-python
+  - libxml2
+  - zlib
+  - gcc
+  - ruby
+  - ruby-devel
+  - mariadb
+  - MySQL-python
+  - policycoreutils-python
+php_fpm_yum_packages:
+  - php
+  - php-fpm
+  - php-cli
+  - php-common
+  - php-devel
+  - php-gd
+  - php-ldap
+  - php-mbstring
+  - php-mysql
+  - php-pdo
+  - php-pear
+  - php-xml
+  - php-xmlrpc
+  - php-soap
+ php_fpm_config:
+  - option: "error_log"
+    section: "global"
+    value: "/var/log/php-fpm/php5-fpm.log"
+  - option: "emergency_restart_threshold"
+    section: "global"
+    value: "10"
+  - option: "emergency_restart_interval"
+    section: "global"
+    value: "1m"
+  - option: "process_control_timeout"
+    section: "global"
+    value: "5"
+  - option: "daemonize"
+    section: "global"
+    value: "no"
+php_pecl_extensions:
+  - apc

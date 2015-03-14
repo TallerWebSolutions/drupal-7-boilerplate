@@ -1,0 +1,3 @@
+[webserver]
+10.180.201.155  ansible_ssh_user=taller
+
