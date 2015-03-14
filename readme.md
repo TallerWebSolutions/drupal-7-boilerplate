@@ -44,5 +44,4 @@ read the readme inside the specific directory.
  * Contains the a list of the most common excluded files.
 
 Built by Robots&trade;
-
 Enhanced by Taller&#0153;
