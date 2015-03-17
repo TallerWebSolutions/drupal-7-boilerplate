@@ -9,6 +9,9 @@ system_packages:
   - libreadline-gplv2-dev
   - nfs-common
   - mysql-client
+  # Need to add 2 versions from same repo to make update-alternatives work
+  - ruby2.0
+  - ruby2.2
 php_fpm_apt_packages:
   - php5-fpm
   - php5-cli
@@ -41,4 +44,3 @@ php_fpm_config:
     section: "global"
     value: "no"
 php_pecl_extensions: []
-

@@ -3,7 +3,7 @@
   sudo: yes
 
   roles:
-    - role: mauricios.MySQL
+    - role: bennojoy.mysql
 
 - hosts: webserver
   sudo: yes
@@ -73,6 +73,10 @@
       tags:
         - system
 
+    - name: "Latest ruby repository"
+      apt_repository: repo='ppa:brightbox/ruby-ng-experimental' state=present
+      when: ansible_os_family == 'Debian'
+
     - name: "Installing dependencies (Debian)."
       apt: >
         name={{ item }}
@@ -84,10 +88,20 @@
       tags:
         - system
 
+    - name: "Making Ruby 2.0 the default one"
+      sudo: yes
+      command: update-alternatives --set ruby /usr/bin/ruby2.0
+
+    - name: "Making Gem 2.0 the default one"
+      sudo: yes
+      command: update-alternatives --set gem /usr/bin/gem2.0
+
     - name: "Add ruby gems dependency manager (bundler)."
+      sudo: yes
       gem: >
         name=bundler
         user_install=no
+        state=latest
       tags:
         - system
 
@@ -124,12 +138,12 @@
         - user
 
     - name: "Check if the .ssh directory is present."
+      sudo: yes
+      sudo_user: "{{ www_owner }}"
       file: >
         path=/home/{{ www_owner }}/.ssh
         mode=6700
         state=directory
-      sudo: yes
-      sudo_user: "{{ www_owner }}"
 
     - name: "Apply the given SSH private key to the www's owner."
       shell: >
