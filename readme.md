@@ -18,6 +18,9 @@ in that specific directory.
 Here's a breakdown for what each directory/file is used for. If you want to know more please
 read the readme inside the specific directory.
 
+* [src](https://github.com/handrus/drupal-boilerplate/tree/kraftwagen/src)
+ * Aonde todo código desenvolvido para o projeto se encontrará
+   aonde as configurações de ambiente devem estar.
 * [drush](https://github.com/TallerWebSolutions/drupal-boilerplate/tree/kraftwagen/drush)
  * Contains project specific drush commands, aliases, and configurations.
 * [results](https://github.com/TallerWebSolutions/drupal-boilerplate/tree/kraftwagen/results)
